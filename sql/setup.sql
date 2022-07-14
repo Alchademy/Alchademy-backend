@@ -19,8 +19,9 @@ CREATE TABLE roles (
 CREATE TABLE cohorts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  month TEXT NOT NULL,
-  year INT NOT NULL
+  month TEXT,
+  year INT,
+  title TEXT
 );
 
 CREATE TABLE users (
@@ -124,9 +125,9 @@ INSERT INTO roles (name, description) VALUES
 
 INSERT INTO status (name) VALUES ('pending'), ('active'), ('archived'), ('completed');
 
-INSERT INTO cohorts (month, year) VALUES
-('February', 2022),
-('January', 2022);
+INSERT INTO cohorts (month, year, title) VALUES
+('February', 2022, 'february-2022'),
+('January', 2022, 'january-2022');
 
 INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
 ('Marty', 'Marty@testAlchemy.com', '', '', null, 4), --1
