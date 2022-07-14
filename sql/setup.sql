@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS user_assignment CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS syllabus;
-DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS submissions;
 DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS assignments;
+DROP TABLE IF EXISTS syllabus;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS user_assignment;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
@@ -46,7 +46,7 @@ CREATE TABLE comments (
   user_id BIGINT NOT NULL,
   target_entity INT NOT NULL,
   target_entity_id INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id) 
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE syllabus (
