@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS tickets;
 DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS cohort_to_syllabus;
 DROP TABLE IF EXISTS cohorts;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles;
@@ -41,7 +42,7 @@ CREATE TABLE cohort_to_syllabus (
   syllabus_id INT NOT NULL,
   FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
   FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
-)
+);
 
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
