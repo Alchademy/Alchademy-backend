@@ -35,8 +35,6 @@ CREATE TABLE users (
   FOREIGN KEY (role) REFERENCES roles(id)
 );
 
-
-
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL
@@ -135,20 +133,20 @@ INSERT INTO cohorts (month, year, title) VALUES
 ('February', 2022, 'february-2022'),
 ('January', 2022, 'january-2022');
 
-INSERT INTO users (username, email, password_hash, avatar, role ) VALUES
-('Marty', 'Marty@testAlchemy.com', '', '', 4), --1
-('Dani', 'Dani@testAlchemy.com', '', '', 3), --2
-('Juli', 'Juli@testAlchemy.com', '', '', 3), --3
-('Madden', 'Madden@testAlchemy.com', '', '', 2), --4
-('Pete', 'Pete@testAlchemy.com', '', '', 2), --5
-('Tanner', 'Tanner@testAlchemy.com', '', '', 2), --6
-('Triana', 'Triana@testAlchemy.com', '', '', 2), --7
-('Delaney', 'Delaney@testAlchemy.com', '', '', 1), --8
-('Riley', 'Riley@testAlchemy.com', '', '', 1), --9
-('Beau', 'Beau@testAlchemy.com', '', '', 1), --10
-('Will', 'Will@testAlchemy.com', '', '', 1), --11
-('Denver', 'Denver@testAlchemy.com', '', '', 1), --12
-('Alex', 'Alex@testAlchemy.com', '', '', 1); --13
+INSERT INTO users (username, email, avatar, role) VALUES
+('Marty', 'Marty@testAlchemy.com', '', 4), --1
+('Dani', 'Dani@testAlchemy.com', '', 3), --2
+('Juli', 'Juli@testAlchemy.com', '', 3), --3
+('Madden', 'Madden@testAlchemy.com', '', 2), --4
+('Pete', 'Pete@testAlchemy.com', '', 2), --5
+('Tanner', 'Tanner@testAlchemy.com', '', 2), --6
+('Triana', 'Triana@testAlchemy.com', '', 2), --7
+('Delaney', 'Delaney@testAlchemy.com', '', 1), --8
+('Riley', 'Riley@testAlchemy.com', '', 1), --9
+('Beau', 'Beau@testAlchemy.com', '', 1), --10
+('Will', 'Will@testAlchemy.com', '', 1), --11
+('Denver', 'Denver@testAlchemy.com', '', 1), --12
+('Alex', 'Alex@testAlchemy.com', '', 1); --13
 
 INSERT INTO syllabus (title, thumbnail_photo, created_by, owner_id, description, status_id)
 VALUES
