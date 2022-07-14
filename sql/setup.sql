@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS tickets;
 DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS cohorts;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles;
 
 
@@ -14,6 +15,13 @@ CREATE TABLE roles (
   description TEXT NOT NULL
 );
 
+CREATE TABLE cohorts (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  month TEXT NOT NULL,
+  year INT NOT NULL
+);
+
 CREATE TABLE users (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -21,10 +29,13 @@ CREATE TABLE users (
   email TEXT,
   password_hash TEXT,
   avatar TEXT,
-  cohort TEXT,
+  cohort_id INT,
   role INT,
-  FOREIGN KEY (role) REFERENCES roles(id)
+  FOREIGN KEY (role) REFERENCES roles(id),
+  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
+
+
 
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -50,11 +61,11 @@ CREATE TABLE syllabus (
   owner_id BIGINT NOT NULL,
   description TEXT,
   status_id INT NOT NULL,
-  user_id INT NOT NULL,
+  cohort_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
   FOREIGN KEY (created_by) REFERENCES users(id),
   FOREIGN KEY (owner_id) REFERENCES users(id),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
 
 CREATE TABLE assignments (
@@ -100,8 +111,23 @@ CREATE TABLE tickets (
 
 -- write seed info for each table
 
+
+
 INSERT INTO roles (name, description) VALUES
 ('Student', 'just a student'),
 ('TA', 'Teachers assistant for each cohort'),
 ('Teacher', 'Leader of the cohort'),
 ('Admin', 'Full CRUD access across the application');
+
+INSERT INTO status (name) VALUES ('pending');
+
+INSERT INTO cohorts (month, year) VALUES 
+('February', 2022);
+
+INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
+('Will test', 'test@test.com', '', '', 1, 1);
+
+INSERT INTO syllabus ( title, thumbnail_photo, created_by, owner_id, description, status_id, cohort_id)
+VALUES 
+('Module 1', 'url', 1, 1, '1st module of Alchemy', 1, 1);
+
