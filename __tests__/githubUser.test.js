@@ -18,6 +18,23 @@ describe('github routes', () => {
     );
   });
 
+  it('GET /github/callback route should login and redirect users to /github/dashboard', async () => {
+    const res = await request
+      .agent(app)
+      .get('/github/callback?code=55')
+      .redirects(1);
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      username: 'helloGoodbye',
+      email: 'hello@goobye.com',
+      avatar: 'https://www.placecage.com/gif/200/200',
+      iat: expect.any(Number),
+      exp: expect.any(Number),
+      created_on: expect.any(String),
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
