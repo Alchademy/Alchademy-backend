@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS cohort_to_syllabus;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS user_to_cohort;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS cohorts;
 DROP TABLE IF EXISTS roles;
@@ -31,10 +32,8 @@ CREATE TABLE users (
   email TEXT,
   password_hash TEXT,
   avatar TEXT,
-  cohort_id INT,
   role INT,
-  FOREIGN KEY (role) REFERENCES roles(id),
-  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
+  FOREIGN KEY (role) REFERENCES roles(id)
 );
 
 
@@ -73,6 +72,14 @@ CREATE TABLE cohort_to_syllabus (
   cohort_id INT NOT NULL,
   syllabus_id INT NOT NULL,
   FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
+  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
+);
+
+CREATE TABLE user_to_cohort (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cohort_id INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
 
@@ -129,20 +136,20 @@ INSERT INTO cohorts (month, year, title) VALUES
 ('February', 2022, 'february-2022'),
 ('January', 2022, 'january-2022');
 
-INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
-('Marty', 'Marty@testAlchemy.com', '', '', null, 4), --1
-('Dani', 'Dani@testAlchemy.com', '', '', null, 3), --2
-('Juli', 'Juli@testAlchemy.com', '', '', null, 3), --3
-('Madden', 'Madden@testAlchemy.com', '', '', 1, 2), --4
-('Pete', 'Pete@testAlchemy.com', '', '', 1, 2), --5
-('Tanner', 'Tanner@testAlchemy.com', '', '', 2, 2), --6
-('Triana', 'Triana@testAlchemy.com', '', '', 2, 2), --7
-('Delaney', 'Delaney@testAlchemy.com', '', '', 1, 1), --8
-('Riley', 'Riley@testAlchemy.com', '', '', 1, 1), --9
-('Beau', 'Beau@testAlchemy.com', '', '', 1, 1), --10
-('Will', 'Will@testAlchemy.com', '', '', 1, 1), --11
-('Denver', 'Denver@testAlchemy.com', '', '', 2, 1), --12
-('Alex', 'Alex@testAlchemy.com', '', '', 2, 1); --13
+INSERT INTO users (username, email, password_hash, avatar, role ) VALUES
+('Marty', 'Marty@testAlchemy.com', '', '', 4), --1
+('Dani', 'Dani@testAlchemy.com', '', '', 3), --2
+('Juli', 'Juli@testAlchemy.com', '', '', 3), --3
+('Madden', 'Madden@testAlchemy.com', '', '', 2), --4
+('Pete', 'Pete@testAlchemy.com', '', '', 2), --5
+('Tanner', 'Tanner@testAlchemy.com', '', '', 2), --6
+('Triana', 'Triana@testAlchemy.com', '', '', 2), --7
+('Delaney', 'Delaney@testAlchemy.com', '', '', 1), --8
+('Riley', 'Riley@testAlchemy.com', '', '', 1), --9
+('Beau', 'Beau@testAlchemy.com', '', '', 1), --10
+('Will', 'Will@testAlchemy.com', '', '', 1), --11
+('Denver', 'Denver@testAlchemy.com', '', '', 1), --12
+('Alex', 'Alex@testAlchemy.com', '', '', 1); --13
 
 INSERT INTO syllabus (title, thumbnail_photo, created_by, owner_id, description, status_id)
 VALUES
@@ -185,7 +192,14 @@ INSERT INTO submissions (text, status_id, assignment_id, user_id, grade) VALUES
 ('Beau Submission for Mushroom Festival', 4, 3, 10, 6),
 ('Beau Submission for Goblin Fighter', 1, 4, 10, null);
 
-
-
-
-
+INSERT INTO user_to_cohort (cohort_id, user_id) VALUES 
+(1, 4),
+(1, 5),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11),
+(2, 6),
+(2, 7),
+(2, 12),
+(2, 13);
