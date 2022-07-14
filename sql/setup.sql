@@ -35,7 +35,13 @@ CREATE TABLE users (
   FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
 
-
+CREATE TABLE cohort_to_syllabus (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cohort_id INT NOT NULL,
+  syllabus_id INT NOT NULL,
+  FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
+  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
+)
 
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
