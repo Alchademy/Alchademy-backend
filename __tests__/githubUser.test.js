@@ -36,12 +36,9 @@ describe('github routes', () => {
   });
 
   it('should remove user session on calling delete', async () => {
-    const agent = await request
-      .agent(app)
-      .get('/github/callback?code=55')
-      .redirects(1);
-    expect(agent.status).toEqual(200);
-
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    
     const loggedOut = await agent.delete('/github/sessions');
 
     expect(loggedOut.body).toEqual({
