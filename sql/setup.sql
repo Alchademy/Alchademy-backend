@@ -2,11 +2,11 @@ DROP TABLE IF EXISTS submissions;
 DROP TABLE IF EXISTS tickets;
 -- DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS assignments;
+DROP TABLE IF EXISTS cohort_to_syllabus;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS cohort_to_syllabus;
-DROP TABLE IF EXISTS cohorts;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS cohorts;
 DROP TABLE IF EXISTS roles;
 
 
@@ -62,11 +62,9 @@ CREATE TABLE syllabus (
   owner_id BIGINT NOT NULL,
   description TEXT,
   status_id INT NOT NULL,
-  cohort_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
   FOREIGN KEY (created_by) REFERENCES users(id),
-  FOREIGN KEY (owner_id) REFERENCES users(id),
-  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
+  FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
 CREATE TABLE cohort_to_syllabus (
@@ -136,9 +134,9 @@ INSERT INTO cohorts (month, year) VALUES
 INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
 ('Will test', 'test@test.com', '', '', 1, 1);
 
-INSERT INTO syllabus ( title, thumbnail_photo, created_by, owner_id, description, status_id, cohort_id)
+INSERT INTO syllabus (title, thumbnail_photo, created_by, owner_id, description, status_id)
 VALUES
-('Module 1', 'url', 1, 1, '1st module of Alchemy', 1, 1);
+('Module 1', 'url', 1, 1, '1st module of Alchemy', 1);
 
 INSERT INTO cohort_to_syllabus (cohort_id, syllabus_id) VALUES
 (1, 1);
