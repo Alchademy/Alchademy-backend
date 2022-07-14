@@ -36,13 +36,7 @@ CREATE TABLE users (
   FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
 
-CREATE TABLE cohort_to_syllabus (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  cohort_id INT NOT NULL,
-  syllabus_id INT NOT NULL,
-  FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
-  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
-);
+
 
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -72,6 +66,14 @@ CREATE TABLE syllabus (
   FOREIGN KEY (status_id) REFERENCES status(id),
   FOREIGN KEY (created_by) REFERENCES users(id),
   FOREIGN KEY (owner_id) REFERENCES users(id),
+  FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
+);
+
+CREATE TABLE cohort_to_syllabus (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cohort_id INT NOT NULL,
+  syllabus_id INT NOT NULL,
+  FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
   FOREIGN KEY (cohort_id) REFERENCES cohorts(id)
 );
 
@@ -128,13 +130,16 @@ INSERT INTO roles (name, description) VALUES
 
 INSERT INTO status (name) VALUES ('pending');
 
-INSERT INTO cohorts (month, year) VALUES 
+INSERT INTO cohorts (month, year) VALUES
 ('February', 2022);
 
 INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
 ('Will test', 'test@test.com', '', '', 1, 1);
 
 INSERT INTO syllabus ( title, thumbnail_photo, created_by, owner_id, description, status_id, cohort_id)
-VALUES 
+VALUES
 ('Module 1', 'url', 1, 1, '1st module of Alchemy', 1, 1);
+
+INSERT INTO cohort_to_syllabus (cohort_id, syllabus_id) VALUES
+(1, 1);
 
