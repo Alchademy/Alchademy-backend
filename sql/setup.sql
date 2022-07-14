@@ -1,32 +1,12 @@
-DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS submissions;
 DROP TABLE IF EXISTS tickets;
-DROP TABLE IF EXISTS comments;
+-- DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS user_assignment;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
 
-
-CREATE TABLE users (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  username TEXT NOT NULL,
-  email TEXT,
-  password_hash TEXT,
-  avatar TEXT
-);
-
-
-CREATE TABLE user_assignment (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  user_id BIGINT NOT NULL,
-  target_entity INT NOT NULL,
-  target_entity_id INT NOT NULL,
-  role INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
 
 CREATE TABLE roles (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -34,20 +14,32 @@ CREATE TABLE roles (
   description TEXT NOT NULL
 );
 
+CREATE TABLE users (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  username TEXT NOT NULL,
+  email TEXT,
+  password_hash TEXT,
+  avatar TEXT,
+  cohort TEXT,
+  role INT,
+  FOREIGN KEY (role) REFERENCES roles(id)
+);
+
 CREATE TABLE status (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL
 );
 
-CREATE TABLE comments (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  text TEXT,
-  user_id BIGINT NOT NULL,
-  target_entity INT NOT NULL,
-  target_entity_id INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
+-- CREATE TABLE comments (
+--   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+--   created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+--   text TEXT,
+--   user_id BIGINT NOT NULL,
+--   target_entity INT NOT NULL,
+--   target_entity_id INT NOT NULL,
+--   FOREIGN KEY (user_id) REFERENCES users(id)
+-- );
 
 CREATE TABLE syllabus (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -58,9 +50,11 @@ CREATE TABLE syllabus (
   owner_id BIGINT NOT NULL,
   description TEXT,
   status_id INT NOT NULL,
+  user_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
   FOREIGN KEY (created_by) REFERENCES users(id),
-  FOREIGN KEY (owner_id) REFERENCES users(id)
+  FOREIGN KEY (owner_id) REFERENCES users(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE assignments (
@@ -72,8 +66,10 @@ CREATE TABLE assignments (
   grade INT,
   total_points INT,
   status_id INT NOT NULL,
+  user_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
-  FOREIGN KEY (syllabus_id) REFERENCES syllabus(id)
+  FOREIGN KEY (syllabus_id) REFERENCES syllabus(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE submissions (
@@ -82,8 +78,10 @@ CREATE TABLE submissions (
   text TEXT,
   status_id INT NOT NULL,
   assignment_id INT NOT NULL,
+  user_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
-  FOREIGN KEY (assignment_id) REFERENCES assignments(id)
+  FOREIGN KEY (assignment_id) REFERENCES assignments(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE tickets (
@@ -93,11 +91,11 @@ CREATE TABLE tickets (
   status_id INT NOT NULL,
   assignment_id INT NOT NULL,
   ta_id INT NOT NULL,
-  created_by INT NOT NULL,
+  user_id INT NOT NULL,
   FOREIGN KEY (status_id) REFERENCES status(id),
   FOREIGN KEY (assignment_id) REFERENCES assignments(id),
   FOREIGN KEY (ta_id) REFERENCES users(id),
-  FOREIGN KEY (created_by) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- write seed info for each table
