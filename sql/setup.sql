@@ -118,26 +118,49 @@ CREATE TABLE tickets (
 
 -- write seed info for each table
 
-
-
 INSERT INTO roles (name, description) VALUES
 ('Student', 'just a student'),
 ('TA', 'Teachers assistant for each cohort'),
 ('Teacher', 'Leader of the cohort'),
 ('Admin', 'Full CRUD access across the application');
 
-INSERT INTO status (name) VALUES ('pending');
+INSERT INTO status (name) VALUES ('pending'), ('active'), ('archived');
 
 INSERT INTO cohorts (month, year) VALUES
-('February', 2022);
+('February', 2022),
+('January', 2022);
 
 INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
-('Will test', 'test@test.com', '', '', 1, 1);
+('Marty', 'Marty@testAlchemy.com', '', '', null, 4), --1
+('Dani', 'Dani@testAlchemy.com', '', '', null, 3), --2
+('Juli', 'Juli@testAlchemy.com', '', '', null, 3), --3
+('Madden', 'Madden@testAlchemy.com', '', '', 1, 2), --4
+('Pete', 'Pete@testAlchemy.com', '', '', 1, 2), --5
+('Tanner', 'Tanner@testAlchemy.com', '', '', 2, 2), --6
+('Triana', 'Triana@testAlchemy.com', '', '', 2, 2), --7
+('Delaney', 'Delaney@testAlchemy.com', '', '', 1, 1), --8
+('Riley', 'Riley@testAlchemy.com', '', '', 1, 1), --9
+('Beau', 'Beau@testAlchemy.com', '', '', 1, 1), --10
+('Will', 'Will@testAlchemy.com', '', '', 1, 1), --11
+('Denver', 'Denver@testAlchemy.com', '', '', 2, 1), --12
+('Alex', 'Alex@testAlchemy.com', '', '', 2, 1); --13
 
 INSERT INTO syllabus (title, thumbnail_photo, created_by, owner_id, description, status_id)
 VALUES
-('Module 1', 'url', 1, 1, '1st module of Alchemy', 1);
+('Module 1: Prework', 'url', 1, 1, '1st module of Alchemy', 1),
+('Module 2: Web', 'url', 1, 1, '2nd module of Alchemy', 1),
+('Module 3: React', 'url', 1, 1, '3rd module of Alchemy', 1),
+('Module 4: Advanced React', 'url', 1, 1, '4th module of Alchemy', 1),
+('Module 5: Backend', 'url', 1, 1, '5th module of Alchemy', 1);
 
 INSERT INTO cohort_to_syllabus (cohort_id, syllabus_id) VALUES
-(1, 1);
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5);
 
