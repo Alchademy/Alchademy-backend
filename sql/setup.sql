@@ -30,7 +30,6 @@ CREATE TABLE users (
   created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   username TEXT NOT NULL,
   email TEXT,
-  password_hash TEXT,
   avatar TEXT,
   role INT,
   FOREIGN KEY (role) REFERENCES roles(id)
