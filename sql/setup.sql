@@ -28,7 +28,6 @@ CREATE TABLE users (
   created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   username TEXT NOT NULL,
   email TEXT,
-  password_hash TEXT,
   avatar TEXT,
   cohort_id INT,
   role INT,
@@ -128,20 +127,20 @@ INSERT INTO cohorts (month, year) VALUES
 ('February', 2022),
 ('January', 2022);
 
-INSERT INTO users (username, email, password_hash, avatar, cohort_id, role ) VALUES
-('Marty', 'Marty@testAlchemy.com', '', '', null, 4), --1
-('Dani', 'Dani@testAlchemy.com', '', '', null, 3), --2
-('Juli', 'Juli@testAlchemy.com', '', '', null, 3), --3
-('Madden', 'Madden@testAlchemy.com', '', '', 1, 2), --4
-('Pete', 'Pete@testAlchemy.com', '', '', 1, 2), --5
-('Tanner', 'Tanner@testAlchemy.com', '', '', 2, 2), --6
-('Triana', 'Triana@testAlchemy.com', '', '', 2, 2), --7
-('Delaney', 'Delaney@testAlchemy.com', '', '', 1, 1), --8
-('Riley', 'Riley@testAlchemy.com', '', '', 1, 1), --9
-('Beau', 'Beau@testAlchemy.com', '', '', 1, 1), --10
-('Will', 'Will@testAlchemy.com', '', '', 1, 1), --11
-('Denver', 'Denver@testAlchemy.com', '', '', 2, 1), --12
-('Alex', 'Alex@testAlchemy.com', '', '', 2, 1); --13
+INSERT INTO users (username, email, avatar, cohort_id, role ) VALUES
+('Marty', 'Marty@testAlchemy.com', '', null, 4), --1
+('Dani', 'Dani@testAlchemy.com', '', null, 3), --2
+('Juli', 'Juli@testAlchemy.com', '', null, 3), --3
+('Madden', 'Madden@testAlchemy.com', '', 1, 2), --4
+('Pete', 'Pete@testAlchemy.com', '', 1, 2), --5
+('Tanner', 'Tanner@testAlchemy.com', '', 2, 2), --6
+('Triana', 'Triana@testAlchemy.com', '', 2, 2), --7
+('Delaney', 'Delaney@testAlchemy.com', '', 1, 1), --8
+('Riley', 'Riley@testAlchemy.com', '', 1, 1), --9
+('Beau', 'Beau@testAlchemy.com', '', 1, 1), --10
+('Will', 'Will@testAlchemy.com', '', 1, 1), --11
+('Denver', 'Denver@testAlchemy.com', '', 2, 1), --12
+('Alex', 'Alex@testAlchemy.com', '', 2, 1); --13
 
 INSERT INTO syllabus (title, thumbnail_photo, created_by, owner_id, description, status_id)
 VALUES
