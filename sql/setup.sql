@@ -99,3 +99,9 @@ CREATE TABLE tickets (
 );
 
 -- write seed info for each table
+
+INSERT INTO roles (name, description) VALUES
+('Student', 'just a student'),
+('TA', 'Teachers assistant for each cohort'),
+('Teacher', 'Leader of the cohort'),
+('Admin', 'Full CRUD access across the application');
