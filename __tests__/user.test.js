@@ -7,7 +7,7 @@ describe('backend-express-template routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('example test - delete me!', () => {
+  it('Get user', () => {
     expect(1).toEqual(1);
   });
   afterAll(() => {
