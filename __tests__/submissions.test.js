@@ -47,11 +47,16 @@ describe('backend submission routes', () => {
     });
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
+      id: expect.any(String),
+      created_on: expect.any(String),
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
       assignment_id: 4,
       user_id: 8,
       grade: 20,
     });
+  });
+  afterAll(() => {
+    pool.end();
   });
 });
