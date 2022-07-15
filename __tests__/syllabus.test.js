@@ -19,7 +19,14 @@ describe('github routes', () => {
     expect(res.body.length).toEqual(5);
   });
 
-  
+  it('GET /cohort/syllabus gets all courses for a user by id', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.get('/syllabus/10');
+
+    expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(4);
+  });
 
   afterAll(() => {
     pool.end();
