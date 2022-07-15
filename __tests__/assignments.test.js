@@ -28,6 +28,22 @@ describe('assignments routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
+  it('GET /assignments/:id should display a singular assignment', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.get('/assignments/1');
+
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({ 
+      title: 'Half Baked: Soccer Score Keeper',
+      description: '',
+      syllabus_id: 2,
+      due_date: 'March 15th 2022',
+      total_points: 10,
+      status_id: 4 
+    });
+  });
+
   it('POST /assignments should add a new assignment into the syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
@@ -52,18 +68,32 @@ describe('assignments routes', () => {
     });
   });
 
-  it('PUT /assignments should update', async () => {
+  it('PUT /assignments/:id should update an assignment', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.put('/assignments/:id')
+    const res = await agent.put('/assignments/1')
       .send({
         description: 'I changed my mind this should be something different',
       });
-      console.log('res', res);
     expect(res.status).toEqual(200);
-    expect(res.body).toEqual({ description: 'I changed my mind this should be something different' });
+    expect(res.body).toEqual({  
+      due_date: 'March 15th 2022',
+      status_id: 4,
+      syllabus_id: 2,
+      title: 'Half Baked: Soccer Score Keeper',
+      total_points: 10,
+      description: 'I changed my mind this should be something different' });
   });
 
+  it('DELETE /assignments/:id should delete a singular assignment', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.delete('/assignments/1');
+    const res = await agent.get('/assignments/1');
+    
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual(null);
+  });
 
   afterAll(() => {
     pool.end();
