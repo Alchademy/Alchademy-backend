@@ -85,6 +85,14 @@ describe('assignments routes', () => {
       description: 'I changed my mind this should be something different' });
   });
 
+  it('DELETE /assignments/:id should delete a singular assignment', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.delete('/assignments/1')
+    ;
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual(null);
+  });
 
   afterAll(() => {
     pool.end();
