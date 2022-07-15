@@ -28,7 +28,29 @@ describe('assignments routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
-  
+  it('Post /assignments should add a new assignment into the syllabus', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.post('/assignments')
+      .send({
+        title: 'From Scratch: Backend is your friend I promise',
+        description: 'Here is some info and then a rubric',
+        syllabus_id: 4,
+        due_date: 'September 1st 2022',
+        total_points: 25,
+        status_id: 4
+      });
+
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({
+      title: 'From Scratch: Backend is your friend I promise',
+      description: 'Here is some info and then a rubric',
+      syllabus_id: 4,
+      due_date: 'September 1st 2022',
+      total_points: 25,
+      status_id: 4
+    });
+  });
 
   afterAll(() => {
     pool.end();
