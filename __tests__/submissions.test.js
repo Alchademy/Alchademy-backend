@@ -56,6 +56,24 @@ describe('backend submission routes', () => {
       grade: 20,
     });
   });
+
+  it('PUT /submissions/id should update a submission', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.put('/submissions/1').send({
+      grade: 7,
+    });
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      created_on: expect.any(String),
+      text: 'Beau Submission for Soccer Score Keeper',
+      status_id: 4,
+      assignment_id: 1,
+      user_id: 10,
+      grade: 7,
+    });
+  });
   afterAll(() => {
     pool.end();
   });
