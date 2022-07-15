@@ -59,7 +59,7 @@ describe('assignments routes', () => {
       .send({
         description: 'I changed my mind this should be something different',
       });
-
+      console.log('res', res);
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({ description: 'I changed my mind this should be something different' });
   });
