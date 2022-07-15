@@ -48,6 +48,22 @@ describe('github routes', () => {
     });
   });
 
+  it('PUT should update a user', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const updatedUser = await agent.put('/github/4')
+      .send({
+        role: 3
+      });
+
+    expect(updatedUser.body).toEqual({
+      username: 'Madden',
+      email: 'madden@testAlchemy.com',
+      avatar: '',
+      role: 3
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
