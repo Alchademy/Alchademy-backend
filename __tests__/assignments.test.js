@@ -28,7 +28,7 @@ describe('assignments routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
-  it('Post /assignments should add a new assignment into the syllabus', async () => {
+  it('POST /assignments should add a new assignment into the syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
     const res = await agent.post('/assignments')
@@ -51,6 +51,19 @@ describe('assignments routes', () => {
       status_id: 4
     });
   });
+
+  it('PUT /assignments should update', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.put('/assignments/:id')
+      .send({
+        description: 'I changed my mind this should be something different',
+      });
+
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({ description: 'I changed my mind this should be something different' });
+  });
+
 
   afterAll(() => {
     pool.end();
