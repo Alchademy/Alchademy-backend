@@ -28,6 +28,21 @@ describe('github routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
+  it('POST /syllabus creates a new syllabus', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.post('/syllabus').send({  title: 'test', thumbnail_photo: '', 
+      created_by: 1, owner_id: 1, description: 'test course', status_id: 1 });
+
+    expect(res.status).toEqual(200);
+    expect(res.body.title).toEqual('test');
+
+    const result = await agent.get('/syllabus');
+
+    expect(result.status).toEqual(200);
+    expect(result.body.length).toEqual(6);
+  });
+
   afterAll(() => {
     pool.end();
   });
