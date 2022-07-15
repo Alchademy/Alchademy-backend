@@ -52,6 +52,18 @@ describe('github routes', () => {
     expect(res.body.length).toEqual(1);
   });
 
+  it('POST /cohorts should update a particular cohort', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const resp = await agent
+      .put('/cohorts/1')
+      .send({ year: 2023, title: 'february-2023' });
+    expect(resp.status).toEqual(200);
+    expect(resp.body.id).toEqual('1');
+    const res = await agent.get('/cohorts/1');
+    expect(res.body.title).toEqual('february-2023');
+  });
+
   afterAll(() => {
     pool.end();
   });
