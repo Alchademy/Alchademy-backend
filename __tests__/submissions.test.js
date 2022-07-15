@@ -2,7 +2,6 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const Submission = require('../lib/models/Submission');
 
 jest.mock('../lib/services/github.js');
 
@@ -13,36 +12,50 @@ describe('backend submission routes', () => {
 
   it('GET /submissions returns a list of submissions associated with the authenticated user', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.post('/submissions').send({
+      text: 'Delaney Submission for Goblin Fighter',
+      status_id: 1,
+      assignment_id: 4,
+      user_id: user.body.id,
+      grade: 20,
+    });
     const res = await agent.get('/submissions').send({
-      user_id: 10,
+      user_id: user.body.id,
     });
     expect(res.status).toEqual(200);
-    expect(res.body.length).toEqual(4);
+    expect(res.body.length).toEqual(1);
   });
 
   it('GET /submissions/:id returns a single submission associated with the authenticated user', async () => {
     // login user
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
-    // send id of submission and id of who that submission belongs to
-    const res = await agent.get('/submissions/1').send({
-      id: 1,
-      user_id: 10,
+    const user = await agent.get('/github/callback?code=55').redirects(1);
+    const submission = await agent.post('/submissions').send({
+      text: 'Delaney Submission for Goblin Fighter',
+      status_id: 1,
+      assignment_id: 4,
+      user_id: String(user.body.id),
+      grade: 20,
     });
+    console.log('submission', submission);
+    // send id of submission and id of who that submission belongs to
+    const res = await agent.get('/submissions/5');
+    console.log('res-body', res.body);
     expect(res.status).toEqual(200);
     // this is the text of beau's (user_id = 10) first submission (id: 1)
-    expect(res.body.text).toEqual('Beau Submission for Soccer Score Keeper');
+    expect(res.body.text).toEqual('Delaney Submission for Goblin Fighter');
   });
 
   it('POST /submissions should create a new submission', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    const user = await agent.get('/github/callback?code=55').redirects(1);
+    console.log('user-body', user.body);
     const res = await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
       assignment_id: 4,
-      user_id: 8,
+      user_id: user.body.id,
       grade: 20,
     });
     expect(res.status).toEqual(200);
@@ -52,7 +65,7 @@ describe('backend submission routes', () => {
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
       assignment_id: 4,
-      user_id: 8,
+      user_id: Number(user.body.id),
       grade: 20,
     });
   });
