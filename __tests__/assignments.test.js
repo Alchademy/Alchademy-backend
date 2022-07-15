@@ -44,7 +44,27 @@ describe('assignments routes', () => {
     });
   });
 
-  it('POST /assignments should add a new assignment into the syllabus', async () => {
+  it('POST /assignments should only allow teachers and above to create new assignments', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.post('/assignments')
+      .send({
+        title: 'From Scratch: Backend is your friend I promise',
+        description: 'Here is some info and then a rubric',
+        syllabus_id: 4,
+        due_date: 'September 1st 2022',
+        total_points: 25,
+        status_id: 4
+      });
+
+    expect(res.status).toEqual(403);
+    expect(res.body).toEqual({
+      message: 'You do not have permission to do that',
+      status: 403
+    });
+  });
+
+  it('POST /assignments should add a new assignment into the syllabus if you are a teacher or higher', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
     const res = await agent.post('/assignments')
@@ -83,6 +103,24 @@ describe('assignments routes', () => {
       title: 'Half Baked: Soccer Score Keeper',
       total_points: 10,
       description: 'I changed my mind this should be something different' });
+  });
+
+  it('DELETE /assignments/:id should only allow teachers and admin to delete a singular assignment', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const resp = await agent.delete('/assignments/1');
+    expect(resp.status).toEqual(403);
+    const res = await agent.get('/assignments/1');
+    
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({
+      description: '', 
+      due_date: 'March 15th 2022', 
+      status_id: 4, 
+      syllabus_id: 2, 
+      title: 'Half Baked: Soccer Score Keeper', 
+      total_points: 10
+    });
   });
 
   it('DELETE /assignments/:id should delete a singular assignment', async () => {
