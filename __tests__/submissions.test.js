@@ -24,15 +24,15 @@ describe('backend submission routes', () => {
     expect(res.body).toEqual(expected);
   });
 
-  it('/submissions/:id returns a single submission', async () => {
+  it('GET /submissions/:id returns a single submission', async () => {
     const res = await request(app).get('/submissions/3');
-    const juliet = {
-      id: '11',
-      name: 'Juliet',
-      gender: 'Female',
-      relationship: 'Aunt',
-      age: 38,
+    const beau_mushroom_fest = {
+      text: 'Beau Submission for Mushroom Festival',
+      status_id: 4,
+      assignment_id: 3,
+      user_id: 10,
+      grade: 6,
     };
-    expect(res.body).toEqual(juliet);
+    expect(res.body).toEqual(beau_mushroom_fest);
   });
 });
