@@ -26,9 +26,10 @@ describe('github routes', () => {
 
     expect(res.body).toEqual({
       id: expect.any(String),
-      username: 'helloGoodbye',
-      email: 'hello@goobye.com',
-      avatar: 'https://www.placecage.com/gif/200/200',
+      username: 'rileyjhofftest',
+      email: null,
+      avatar: 'https://avatars.githubusercontent.com/u/109310727?v=4',
+      role: 2,
       iat: expect.any(Number),
       exp: expect.any(Number),
       created_on: expect.any(String),
@@ -38,12 +39,12 @@ describe('github routes', () => {
   it('should remove user session on calling delete', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    
+
     const loggedOut = await agent.delete('/github/sessions');
 
     expect(loggedOut.body).toEqual({
       message: 'Signed out successfully!',
-      success: true
+      success: true,
     });
   });
 
