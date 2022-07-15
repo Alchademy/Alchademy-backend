@@ -11,13 +11,13 @@ describe('backend submission routes', () => {
     return setup(pool);
   });
 
-  it('GET /submissions returns a list of submissions associated with the authenticated user', async () => {
-    const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.get('/submissions').send({
-      user_id: 10,
-    });
-    expect(res.status).toEqual(200);
-    expect(res.body.length).toEqual(4);
-  });
+  // it('GET /submissions returns a list of submissions associated with the authenticated user', async () => {
+  //   const agent = await request.agent(app);
+  //   await agent.get('/github/callback?code=55').redirects(1);
+  //   const res = await agent.get('/submissions').send({
+  //     user_id: 10,
+  //   });
+  //   expect(res.status).toEqual(200);
+  //   expect(res.body.length).toEqual(4);
+  // });
 });

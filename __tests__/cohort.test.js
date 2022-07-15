@@ -42,6 +42,16 @@ describe('github routes', () => {
     expect(result.body.length).toEqual(3);
   });
 
+  it('DELETE /cohorts should delete a particular recipe', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const resp = await agent.delete('/cohorts/1');
+    expect(resp.status).toEqual(200);
+    expect(resp.body.id).toEqual('1');
+    const res = await agent.get('/cohorts');
+    expect(res.body.length).toEqual(1);
+  });
+
   afterAll(() => {
     pool.end();
   });
