@@ -28,6 +28,15 @@ describe('github routes', () => {
     expect(res.body.title).toEqual('february-2022');
   });
 
+  it.skip('POST /cohorts creates a new cohort', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.post('/cohorts').send();
+
+    expect(res.status).toEqual(200);
+    expect(res.body.title).toEqual('february-2022');
+  });
+
   afterAll(() => {
     pool.end();
   });

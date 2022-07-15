@@ -13,10 +13,10 @@ describe('github routes', () => {
   it('GET /cohort/syllabus gets all courses for a students assigned cohort', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.get('/syllabus/1');
+    const res = await agent.get('/syllabus');
 
     expect(res.status).toEqual(200);
-    expect(res.body.length).toEqual(1);
+    expect(res.body.length).toEqual(5);
   });
 
   
