@@ -30,18 +30,15 @@ describe('backend submission routes', () => {
     // login user
     const agent = await request.agent(app);
     const user = await agent.get('/github/callback?code=55').redirects(1);
-    const submission = await agent.post('/submissions').send({
+    await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
       assignment_id: 4,
       user_id: String(user.body.id),
       grade: 20,
     });
-    console.log('submission', submission);
     // send id of submission and id of who that submission belongs to
     const res = await agent.get('/submissions/5');
-    console.log('res-body', res.body);
-    expect(res.status).toEqual(200);
     // this is the text of beau's (user_id = 10) first submission (id: 1)
     expect(res.body.text).toEqual('Delaney Submission for Goblin Fighter');
   });
@@ -49,7 +46,6 @@ describe('backend submission routes', () => {
   it('POST /submissions should create a new submission', async () => {
     const agent = await request.agent(app);
     const user = await agent.get('/github/callback?code=55').redirects(1);
-    console.log('user-body', user.body);
     const res = await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
