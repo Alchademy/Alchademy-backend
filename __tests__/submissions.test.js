@@ -13,6 +13,7 @@ describe('backend submission routes', () => {
   it('GET /submissions returns a list of submissions associated with the authenticated user', async () => {
     const agent = await request.agent(app);
     const user = await agent.get('/github/callback?code=55').redirects(1);
+    console.log('user', user.body);
     await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
@@ -20,9 +21,7 @@ describe('backend submission routes', () => {
       user_id: user.body.id,
       grade: 20,
     });
-    const res = await agent.get('/submissions').send({
-      user_id: user.body.id,
-    });
+    const res = await agent.get('/submissions');
     expect(res.status).toEqual(200);
     expect(res.body.length).toEqual(1);
   });
