@@ -208,6 +208,13 @@ INSERT INTO submissions (text, status_id, assignment_id, user_id, grade) VALUES
 ('Beau Submission for Mushroom Festival', 4, 3, 10, 6),
 ('Beau Submission for Goblin Fighter', 1, 4, 10, null);
 
+INSERT INTO tickets (text, status_id, assignment_id, ta_id, user_id) VALUES
+('please help me', 1, 3, 4, 9),
+('This assignment is hard', 2, 5, 4, 10),
+('Im stuck in infinity', 2, 7, 5, 11),
+('wow', 1, 3, 5, 9)
+;
+
 INSERT INTO user_to_cohort (cohort_id, user_id) VALUES 
 (1, 4),
 (1, 5),
