@@ -90,8 +90,12 @@ describe('backend submission routes', () => {
   it('DELETE /submissions/:id should delete a single submission', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.put('/github/1').send({ role: 4 });
+    await agent.delete('/github/sessions');
+    await agent.get('/github/callback?code=55').redirects(1);
     await agent.delete('/submissions/2');
     const res = await agent.get('/submissions/2');
+    console.log('res.body', res.body);
     expect(res.status).toEqual(200);
     expect(res.body).toEqual(null);
   });
