@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github.js');
 
-describe('github routes', () => {
+describe('syllabus routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -31,8 +31,16 @@ describe('github routes', () => {
   it('POST /syllabus creates a new syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.post('/syllabus').send({  title: 'test', thumbnail_photo: '', 
-      created_by: 1, owner_id: 1, description: 'test course', status_id: 1 });
+    const res = await agent
+      .post('/syllabus')
+      .send({
+        title: 'test',
+        thumbnail_photo: '',
+        created_by: 1,
+        owner_id: 1,
+        description: 'test course',
+        status_id: 1,
+      });
 
     expect(res.status).toEqual(200);
     expect(res.body.title).toEqual('test');
@@ -75,10 +83,3 @@ describe('github routes', () => {
     pool.end();
   });
 });
-
-
-
-
-
-
-
