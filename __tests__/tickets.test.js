@@ -39,7 +39,7 @@ describe('assignments routes', () => {
       status_id: 4 
     });
     expect(res.status).toBe(200);
-    expect(res.body.length).toEqual(2);
+    expect(res.body.length).toEqual(1);
   });
 
   afterAll(() => {
