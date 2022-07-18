@@ -62,6 +62,7 @@ describe('github routes', () => {
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('1');
     const res = await agent.get('/syllabus/1');
+    console.log(res);
     expect(res.body.title).toEqual('test');
   });
 
