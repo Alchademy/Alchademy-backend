@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github.js');
 
-describe('assignments routes', () => {
+describe('tickets routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
