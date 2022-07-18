@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS user_to_cohort;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS cohorts;
 DROP TABLE IF EXISTS roles;
-
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS entities;
 
 CREATE TABLE roles (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -119,6 +120,24 @@ CREATE TABLE tickets (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE entities (
+  id BIGINT PRIMARY KEY,
+  name text NOT NULL
+);
+
+CREATE TABLE comments (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  text TEXT,
+  status_id INT NOT NULL,
+  user_id INT NOT NULL,
+  target_entity INT NOT NULL,
+  target_entity_id INT NOT NULL,
+  FOREIGN KEY (status_id) REFERENCES status(id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (target_entity) REFERENCES entities(id)
+);
+
 -- write seed info for each table
 
 INSERT INTO roles (name, description) VALUES
@@ -200,3 +219,16 @@ INSERT INTO user_to_cohort (cohort_id, user_id) VALUES
 (2, 7),
 (2, 12),
 (2, 13);
+
+INSERT INTO entities (id, name) VALUES
+(100, 'assignments'),
+(200, 'cohorts'),
+(300, 'syllabus'),
+(400, 'submissions'),
+(500, 'users'),
+(600, 'tickets'),
+(700, 'comments');
+
+INSERT INTO comments (text, status_id, user_id, target_entity, target_entity_id) VALUES
+('testing the comment system, comment on Beau Poll Maker', 2, 10, 400, 2),
+('testing the comment system, Beau commenting on the Feb Cohort', 2, 10, 200, 1);
