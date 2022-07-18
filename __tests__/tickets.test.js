@@ -2,11 +2,10 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const { update } = require('../lib/models/Assignment');
 
 jest.mock('../lib/services/github.js');
 
-describe('assignments routes', () => {
+describe('tickets routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
