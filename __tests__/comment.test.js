@@ -44,7 +44,7 @@ describe('github routes', () => {
     expect(resp.body.length).toEqual(2);
   });
 
-  it('DELETE /cohorts should delete a particular recipe', async () => {
+  it('DELETE /comments should delete a particular comment', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
     const res = await agent.post('/comments').send({ text: 'test second comment', user_id: 10, target_entity: 400, target_entity_id: 2, status_id: 2 });

@@ -13,6 +13,9 @@ describe('github routes', () => {
   it('GET /cohorts gets all cohorts', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.put('/github/1').send({ role: 3 });
+    await agent.delete('/github/sessions');
+    await agent.get('/github/callback?code=55').redirects(1);
     const res = await agent.get('/cohorts');
 
     expect(res.status).toEqual(200);
@@ -58,7 +61,7 @@ describe('github routes', () => {
     expect(res.body.length).toEqual(1);
   });
 
-  it('POST /cohorts should update a particular cohort', async () => {
+  it('PUT /cohorts should update a particular cohort', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
     await agent.put('/github/1').send({ role: 3 });
@@ -67,7 +70,6 @@ describe('github routes', () => {
     const resp = await agent
       .put('/cohorts/1')
       .send({ year: 2023, title: 'february-2023' });
-    console.log(resp);
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('1');
     const res = await agent.get('/cohorts/1');
