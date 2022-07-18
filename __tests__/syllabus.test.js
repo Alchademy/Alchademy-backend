@@ -46,6 +46,9 @@ describe('github routes', () => {
   it('DELETE /syllabus/:id should delete a particular syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.put('/github/1').send({ role: 3 });
+    await agent.delete('/github/sessions');
+    await agent.get('/github/callback?code=55').redirects(1);
     const resp = await agent.delete('/syllabus/1');
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('1');
@@ -56,13 +59,15 @@ describe('github routes', () => {
   it('POST /syllabus should update a particular syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.put('/github/1').send({ role: 3 });
+    await agent.delete('/github/sessions');
+    await agent.get('/github/callback?code=55').redirects(1);
     const resp = await agent
       .put('/syllabus/1')
       .send({ title: 'test', thumbnail_photo: 'www.google.com' });
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('1');
     const res = await agent.get('/syllabus/1');
-    console.log(res);
     expect(res.body.title).toEqual('test');
   });
 
