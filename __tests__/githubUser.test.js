@@ -14,7 +14,7 @@ describe('github routes', () => {
     const res = await request(app).get('/github/login');
 
     expect(res.header.location).toMatch(
-      /https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=http:\/\/localhost:7890\/github\/callback/i
+      /https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=https:\/\/alchademy.herokuapp.com\/github\/callback/i
     );
   });
 
