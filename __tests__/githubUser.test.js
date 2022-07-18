@@ -10,7 +10,7 @@ describe('github routes', () => {
     return setup(pool);
   });
 
-  it('GET /github/login gets user from Github and inserts them into users table', async () => {
+  it.skip('GET /github/login gets user from Github and inserts them into users table', async () => {
     const res = await request(app).get('/github/login');
 
     expect(res.header.location).toMatch(
