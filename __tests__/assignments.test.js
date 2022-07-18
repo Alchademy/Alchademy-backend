@@ -79,9 +79,7 @@ describe('assignments routes', () => {
         total_points: 25,
         status_id: 4
       });
-
-    console.log('res.body', res.body);
-
+    
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       title: 'From Scratch: Backend is your friend I promise',
