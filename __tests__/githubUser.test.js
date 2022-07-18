@@ -61,7 +61,7 @@ describe('github routes', () => {
       created_on: expect.any(String),
       email: null,
       id: '14',
-      role: 3,
+      role: 3, 
       username: 'rileyjhofftest',
     });
   });
