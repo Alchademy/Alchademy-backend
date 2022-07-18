@@ -90,7 +90,6 @@ describe('backend submission routes', () => {
     await agent.get('/github/callback?code=55').redirects(1);
     await agent.delete('/submissions/2');
     const res = await agent.get('/submissions/2');
-    console.log('res.body', res.body);
     expect(res.status).toEqual(200);
     expect(res.body).toEqual(null);
   });
