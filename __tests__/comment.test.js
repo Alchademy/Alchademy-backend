@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github.js');
 
-describe('github routes', () => {
+describe('comment routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -16,7 +16,9 @@ describe('github routes', () => {
     const res = await agent.get('/comments/2');
 
     expect(res.status).toEqual(200);
-    expect(res.body.text).toEqual('testing the comment system, Beau commenting on the Feb Cohort');
+    expect(res.body.text).toEqual(
+      'testing the comment system, Beau commenting on the Feb Cohort'
+    );
   });
 
   it('GET /comments for a specific record and type', async () => {
@@ -25,14 +27,24 @@ describe('github routes', () => {
     const res = await agent.get('/comments/400/2');
 
     expect(res.status).toEqual(200);
-    expect(res.body[0].text).toEqual('testing the comment system, comment on Beau Poll Maker');
+    expect(res.body[0].text).toEqual(
+      'testing the comment system, comment on Beau Poll Maker'
+    );
     expect(res.body.length).toEqual(1);
   });
 
   it('POST /comments creates a new comment for the user on a record', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.post('/comments').send({ text: 'test second comment', user_id: 10, target_entity: 400, target_entity_id: 2, status_id: 2 });
+    const res = await agent
+      .post('/comments')
+      .send({
+        text: 'test second comment',
+        user_id: 10,
+        target_entity: 400,
+        target_entity_id: 2,
+        status_id: 2,
+      });
 
     expect(res.status).toEqual(200);
     expect(res.body.text).toEqual('test second comment');
@@ -40,14 +52,24 @@ describe('github routes', () => {
     const resp = await agent.get('/comments/400/2');
 
     expect(resp.status).toEqual(200);
-    expect(resp.body[0].text).toEqual('testing the comment system, comment on Beau Poll Maker');
+    expect(resp.body[0].text).toEqual(
+      'testing the comment system, comment on Beau Poll Maker'
+    );
     expect(resp.body.length).toEqual(2);
   });
 
   it('DELETE /comments should delete a particular comment', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.post('/comments').send({ text: 'test second comment', user_id: 10, target_entity: 400, target_entity_id: 2, status_id: 2 });
+    const res = await agent
+      .post('/comments')
+      .send({
+        text: 'test second comment',
+        user_id: 10,
+        target_entity: 400,
+        target_entity_id: 2,
+        status_id: 2,
+      });
 
     expect(res.status).toEqual(200);
     expect(res.body.text).toEqual('test second comment');
@@ -55,7 +77,9 @@ describe('github routes', () => {
     const resp = await agent.get('/comments/400/2');
 
     expect(resp.status).toEqual(200);
-    expect(resp.body[0].text).toEqual('testing the comment system, comment on Beau Poll Maker');
+    expect(resp.body[0].text).toEqual(
+      'testing the comment system, comment on Beau Poll Maker'
+    );
     expect(resp.body.length).toEqual(2);
 
     const respDelete = await agent.delete(`/comments/${res.body.id}`);
@@ -72,10 +96,3 @@ describe('github routes', () => {
     pool.end();
   });
 });
-
-
-
-
-
-
-

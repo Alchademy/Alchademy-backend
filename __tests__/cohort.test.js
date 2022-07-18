@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github.js');
 
-describe('github routes', () => {
+describe('cohort routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -37,7 +37,9 @@ describe('github routes', () => {
     await agent.put('/github/1').send({ role: 3 });
     await agent.delete('/github/sessions');
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.post('/cohorts').send({ month: 'March', year: 2022, title: 'march-2022' });
+    const res = await agent
+      .post('/cohorts')
+      .send({ month: 'March', year: 2022, title: 'march-2022' });
 
     expect(res.status).toEqual(200);
     expect(res.body.title).toEqual('march-2022');
@@ -80,10 +82,3 @@ describe('github routes', () => {
     pool.end();
   });
 });
-
-
-
-
-
-
-
