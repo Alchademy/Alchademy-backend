@@ -13,7 +13,7 @@ describe('assignments routes', () => {
   it('GET /tickets should display all tickets currently available ', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent.get('/tickets');
+    const res = await agent.get('/tickets').send({});
 
     expect(res.status).toEqual(200);
     expect(res.body.length).toEqual(4);
