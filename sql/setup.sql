@@ -146,7 +146,7 @@ INSERT INTO roles (name, description) VALUES
 ('Teacher', 'Leader of the cohort'),
 ('Admin', 'Full CRUD access across the application');
 
-INSERT INTO status (name) VALUES ('pending'), ('active'), ('archived'), ('completed');
+INSERT INTO status (name) VALUES ('Pending'), ('Active'), ('Archived'), ('Completed');
 
 INSERT INTO cohorts (month, year, title) VALUES
 ('February', 2022, 'february-2022'),
