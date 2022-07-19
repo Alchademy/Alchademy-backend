@@ -25,10 +25,23 @@ describe('cohort routes', () => {
   it('GET /cohorts/:id gets a single cohort by id', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/dashboard');
+
     const res = await agent.get('/cohorts/1');
+    
 
     expect(res.status).toEqual(200);
     expect(res.body.title).toEqual('february-2022');
+  });
+
+  it('GET /user/:id gets the users cohorts by id', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55').redirects(1);
+    const res = await agent.get('/user/10');
+
+    expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(1);
+    expect(res.body[0].title).toEqual('february-2022');
   });
 
   it('POST /cohorts creates a new cohort', async () => {
@@ -69,6 +82,7 @@ describe('cohort routes', () => {
     await agent.put('/github/1').send({ role: 3 });
     await agent.delete('/github/sessions');
     await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/dashboard');
     const resp = await agent
       .put('/cohorts/1')
       .send({ year: 2023, title: 'february-2023' });
