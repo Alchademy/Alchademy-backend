@@ -18,13 +18,14 @@ describe('github routes', () => {
     );
   });
 
-  it.skip('GET /github/callback route should login and redirect users to /github/dashboard', async () => {
-    const res = await request
-      .agent(app)
-      .get('/github/callback?code=55')
-      .redirects(1);
+  it('GET /github/callback route should login in user. GET /github/dashboard should get user', async () => {
+    const agent = await request.agent(app);
+    const cookie = await agent.get('/github/callback?code=55');
+    expect(cookie.cookie);
 
-    expect(res.body).toEqual({
+    const user = await agent.get('/github/dashboard');
+
+    expect(user.body).toEqual({
       id: expect.any(String),
       username: 'rileyjhofftest',
       email: null,

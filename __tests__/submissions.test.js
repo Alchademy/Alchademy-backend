@@ -12,7 +12,8 @@ describe('backend submission routes', () => {
 
   it('GET /submissions returns a list of submissions associated with the authenticated user', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
@@ -28,7 +29,8 @@ describe('backend submission routes', () => {
   it('GET /submissions/:id returns a single submission associated with the authenticated user', async () => {
     // login user
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
@@ -44,7 +46,8 @@ describe('backend submission routes', () => {
 
   it('POST /submissions should create a new submission', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     const res = await agent.post('/submissions').send({
       text: 'Delaney Submission for Goblin Fighter',
       status_id: 1,
