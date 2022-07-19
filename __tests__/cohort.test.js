@@ -30,7 +30,7 @@ describe('cohort routes', () => {
     const res = await agent.get('/cohorts/1');
 
     expect(res.status).toEqual(200);
-    expect(res.body[0].title).toEqual('february-2022');
+    expect(res.body.title).toEqual('february-2022');
   });
 
   it('GET /user/:id gets the users cohorts by id', async () => {
@@ -88,7 +88,7 @@ describe('cohort routes', () => {
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('1');
     const res = await agent.get('/cohorts/1');
-    expect(res.body[0].title).toEqual('february-2023');
+    expect(res.body.title).toEqual('february-2023');
   });
 
   afterAll(() => {
