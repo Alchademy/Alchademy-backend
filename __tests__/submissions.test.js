@@ -69,7 +69,7 @@ describe('backend submission routes', () => {
 
   it('PUT /submissions/id should update a submission', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
     const res = await agent.put('/submissions/1').send({
       grade: 7,
     });
@@ -87,10 +87,10 @@ describe('backend submission routes', () => {
 
   it('DELETE /submissions/:id should delete a single submission', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
     await agent.put('/github/1').send({ role: 4 });
     await agent.delete('/github/sessions');
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
     await agent.delete('/submissions/2');
     const res = await agent.get('/submissions/2');
     expect(res.status).toEqual(200);
