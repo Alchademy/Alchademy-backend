@@ -12,7 +12,8 @@ describe('tickets routes', () => {
 
   it('GET /tickets should display all tickets currently available', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     await agent.post('/tickets').send({
       text: 'wow that was painful',
       status_id: 1,
@@ -28,7 +29,8 @@ describe('tickets routes', () => {
 
   it('GET /tickets/:id should return a single ticket', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     const newTicket = await agent.post('/tickets').send({
       text: 'wow that was painful',
       status_id: 1,
@@ -51,7 +53,8 @@ describe('tickets routes', () => {
 
   it('POST /ticket should create a single ticket on an assignment', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     const res = await agent.post('/tickets').send({
       text: 'wow that was painful',
       status_id: 1,
@@ -73,7 +76,8 @@ describe('tickets routes', () => {
 
   it('PUT /tickets/:id should update the status of a single ticket', async () => {
     const agent = await request.agent(app);
-    const user = await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
     const updatedTicket = await agent.post('/tickets').send({
       text: 'wow that was painful',
       status_id: 1,
