@@ -12,7 +12,7 @@ describe('comment routes', () => {
 
   it('GET /comments gets single comment', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
     const res = await agent.get('/comments/2');
 
     expect(res.status).toEqual(200);
@@ -23,7 +23,7 @@ describe('comment routes', () => {
 
   it('GET /comments for a specific record and type', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
     const res = await agent.get('/comments/400/2');
 
     expect(res.status).toEqual(200);
@@ -35,16 +35,14 @@ describe('comment routes', () => {
 
   it('POST /comments creates a new comment for the user on a record', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent
-      .post('/comments')
-      .send({
-        text: 'test second comment',
-        user_id: 10,
-        target_entity: 400,
-        target_entity_id: 2,
-        status_id: 2,
-      });
+    await agent.get('/github/callback?code=55');
+    const res = await agent.post('/comments').send({
+      text: 'test second comment',
+      user_id: 10,
+      target_entity: 400,
+      target_entity_id: 2,
+      status_id: 2,
+    });
 
     expect(res.status).toEqual(200);
     expect(res.body.text).toEqual('test second comment');
@@ -60,16 +58,14 @@ describe('comment routes', () => {
 
   it('DELETE /comments should delete a particular comment', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
-    const res = await agent
-      .post('/comments')
-      .send({
-        text: 'test second comment',
-        user_id: 10,
-        target_entity: 400,
-        target_entity_id: 2,
-        status_id: 2,
-      });
+    await agent.get('/github/callback?code=55');
+    const res = await agent.post('/comments').send({
+      text: 'test second comment',
+      user_id: 10,
+      target_entity: 400,
+      target_entity_id: 2,
+      status_id: 2,
+    });
 
     expect(res.status).toEqual(200);
     expect(res.body.text).toEqual('test second comment');

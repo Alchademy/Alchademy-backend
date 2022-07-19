@@ -39,7 +39,8 @@ describe('github routes', () => {
 
   it('should remove user session on calling delete', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    await agent.get('/github/dashboard');
 
     const loggedOut = await agent.delete('/github/sessions');
 
@@ -51,7 +52,8 @@ describe('github routes', () => {
 
   it('PUT should update a user', async () => {
     const agent = await request.agent(app);
-    await agent.get('/github/callback?code=55').redirects(1);
+    await agent.get('/github/callback?code=55');
+    await agent.get('/github/dashboard');
     const updatedUser = await agent.put('/github/1').send({
       role: 3,
     });
