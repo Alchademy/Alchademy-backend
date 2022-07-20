@@ -29,7 +29,8 @@ describe('assignments routes', () => {
       title: 'Half Baked: Soccer Score Keeper',
       description: '',
       syllabus_id: 2,
-      due_date: 'March 15th 2022',
+      due_date: expect.any(String),
+      status: expect.any(String),
       total_points: 10,
       status_id: 4,
     });
@@ -42,7 +43,7 @@ describe('assignments routes', () => {
       title: 'From Scratch: Backend is your friend I promise',
       description: 'Here is some info and then a rubric',
       syllabus_id: 4,
-      due_date: 'September 1st 2022',
+      due_date: '2022-06-17 09:00:00',
       total_points: 25,
       status_id: 4,
     });
@@ -64,7 +65,7 @@ describe('assignments routes', () => {
       title: 'From Scratch: Backend is your friend I promise',
       description: 'Here is some info and then a rubric',
       syllabus_id: 4,
-      due_date: 'September 1st 2022',
+      due_date: '2022-06-17 09:00:00',
       total_points: 25,
       status_id: 4,
     });
@@ -74,7 +75,7 @@ describe('assignments routes', () => {
       title: 'From Scratch: Backend is your friend I promise',
       description: 'Here is some info and then a rubric',
       syllabus_id: 4,
-      due_date: 'September 1st 2022',
+      due_date: expect.any(String),
       total_points: 25,
       status_id: 4,
     });
@@ -88,7 +89,7 @@ describe('assignments routes', () => {
     });
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
-      due_date: 'March 15th 2022',
+      due_date: expect.any(String),
       status_id: 4,
       syllabus_id: 2,
       title: 'Half Baked: Soccer Score Keeper',
@@ -107,7 +108,8 @@ describe('assignments routes', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       description: '',
-      due_date: 'March 15th 2022',
+      due_date: expect.any(String),
+      status: expect.any(String),
       status_id: 4,
       syllabus_id: 2,
       title: 'Half Baked: Soccer Score Keeper',
