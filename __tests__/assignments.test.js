@@ -30,6 +30,7 @@ describe('assignments routes', () => {
       description: '',
       syllabus_id: 2,
       due_date: expect.any(String),
+      status: expect.any(String),
       total_points: 10,
       status_id: 4,
     });
@@ -108,6 +109,7 @@ describe('assignments routes', () => {
     expect(res.body).toEqual({
       description: '',
       due_date: expect.any(String),
+      status: expect.any(String),
       status_id: 4,
       syllabus_id: 2,
       title: 'Half Baked: Soccer Score Keeper',
