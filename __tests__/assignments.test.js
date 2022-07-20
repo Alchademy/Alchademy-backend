@@ -26,6 +26,7 @@ describe('assignments routes', () => {
 
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
+      id: expect.any(String),
       title: 'Half Baked: Soccer Score Keeper',
       description: '',
       syllabus_id: 2,
@@ -72,6 +73,7 @@ describe('assignments routes', () => {
 
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
+      id: expect.any(String),
       title: 'From Scratch: Backend is your friend I promise',
       description: 'Here is some info and then a rubric',
       syllabus_id: 4,
@@ -89,6 +91,7 @@ describe('assignments routes', () => {
     });
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
+      id: expect.any(String),
       due_date: expect.any(String),
       status_id: 4,
       syllabus_id: 2,
@@ -107,6 +110,7 @@ describe('assignments routes', () => {
 
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
+      id: expect.any(String),
       description: '',
       due_date: expect.any(String),
       status: expect.any(String),
