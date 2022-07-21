@@ -40,8 +40,50 @@ describe('backend submission routes', () => {
     });
     // send id of submission and id of who that submission belongs to
     const res = await agent.get('/submissions/5');
+    expect(res.status).toEqual(200);
     // this is the text of beau's (user_id = 10) first submission (id: 1)
     expect(res.body.text).toEqual('Delaney Submission for Goblin Fighter');
+  });
+
+  it('GET /submissions/assignment/:id returns all submissions for a specific assignment for a user', async () => {
+    // login user
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55');
+    const user = await agent.get('/github/dashboard');
+    await agent.post('/submissions').send({
+      text: 'Delaney Submission for Goblin Fighter',
+      status_id: 1,
+      assignment_id: 4,
+      user_id: String(user.body.id),
+      grade: 20,
+    });
+    await agent.post('/submissions').send({
+      text: 'Delaney 2nd Submission for Goblin Fighter',
+      status_id: 1,
+      assignment_id: 4,
+      user_id: String(user.body.id),
+      grade: 20,
+    });
+    await agent.post('/submissions').send({
+      text: 'Delaney 3rd Submission for Goblin Fighter',
+      status_id: 1,
+      assignment_id: 4,
+      user_id: String(user.body.id),
+      grade: 20,
+    });
+    const res = await agent.get('/submissions/assignment/4');
+    // this is the text of beau's (user_id = 10) first submission (id: 1)
+    expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(3);
+  });
+
+  it('GET /submissions/ta returns all submissions if the user is a ta', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55');
+    const res = await agent.get('/submissions/ta');
+    expect(res.status).toEqual(200);
+    // there are 4 seeded submissions
+    expect(res.body.length).toEqual(4);
   });
 
   it('POST /submissions should create a new submission', async () => {
@@ -64,11 +106,11 @@ describe('backend submission routes', () => {
       assignment_id: 4,
       user_id: Number(user.body.id),
       grade: 20,
-      repo_link: null
+      repo_link: null,
     });
   });
 
-  it('PUT /submissions/id should update a submission', async () => {
+  it('PUT /submissions/:id should update a submission', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.put('/submissions/1').send({
@@ -83,7 +125,7 @@ describe('backend submission routes', () => {
       assignment_id: 1,
       user_id: 10,
       grade: 7,
-      repo_link: null
+      repo_link: null,
     });
   });
 

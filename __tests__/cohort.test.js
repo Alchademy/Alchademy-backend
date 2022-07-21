@@ -62,7 +62,7 @@ describe('cohort routes', () => {
     expect(result.body.length).toEqual(3);
   });
 
-  it('DELETE /cohorts should delete a particular recipe', async () => {
+  it('DELETE /cohorts/:id should delete a particular recipe', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.put('/github/1').send({ role: 3 });
@@ -75,7 +75,7 @@ describe('cohort routes', () => {
     expect(res.body.length).toEqual(1);
   });
 
-  it('PUT /cohorts should update a particular cohort', async () => {
+  it('PUT /cohorts/:id should update a particular cohort', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.put('/github/1').send({ role: 3 });

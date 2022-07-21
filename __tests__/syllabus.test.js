@@ -10,7 +10,7 @@ describe('syllabus routes', () => {
     return setup(pool);
   });
 
-  it('GET /cohort/syllabus gets all courses for a students assigned cohort', async () => {
+  it('GET /syllabus gets all courses for a students assigned cohort', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.get('/syllabus');
@@ -26,6 +26,23 @@ describe('syllabus routes', () => {
 
     expect(res.status).toEqual(200);
     expect(res.body.length).toEqual(4);
+  });
+
+  it('GET /syllabus/:id should display a single syllabus/course', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55');
+    const res = await agent.get('/syllabus/1');
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual({
+      id: '1',
+      title: 'Module 1: Prework',
+      created_on: expect.any(String),
+      thumbnail_photo: 'url',
+      created_by: '1',
+      owner_id: '1',
+      description: '1st module of Alchemy',
+      status_id: 1,
+    });
   });
 
   it('POST /syllabus creates a new syllabus', async () => {
@@ -62,7 +79,7 @@ describe('syllabus routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
-  it('POST /syllabus should update a particular syllabus', async () => {
+  it('PUT /syllabus/:id should update a particular syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.put('/github/1').send({ role: 3 });
