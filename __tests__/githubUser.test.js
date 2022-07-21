@@ -27,6 +27,7 @@ describe('github routes', () => {
 
     expect(user.body).toEqual({
       id: expect.any(String),
+      role_name: 'TA',
       username: 'rileyjhofftest',
       email: null,
       avatar: 'https://avatars.githubusercontent.com/u/109310727?v=4',
