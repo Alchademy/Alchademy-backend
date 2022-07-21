@@ -10,13 +10,24 @@ describe('assignments routes', () => {
     return setup(pool);
   });
 
-  it('GET /assignments should display all assignments for a syllabus', async () => {
+  it('GET /assignments/syllabus/:id should display all assignments for a syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.get('/assignments/syllabus/1');
 
     expect(res.status).toEqual(200);
     expect(res.body.length).toEqual(21);
+  });
+
+  it('GET /assignments/user/syllabus/:id should display all assignments with grade info for a user', async () => {
+    const agent = await request.agent(app);
+    await agent.get('/github/callback?code=55');
+    const res = await agent.get('/assignments/user/syllabus/1');
+
+    expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(21);
+    expect(res.body[5].grade);
+    expect(res.body[12].created_on);
   });
 
   it('GET /assignments/:id should display a singular assignment', async () => {
@@ -35,7 +46,7 @@ describe('assignments routes', () => {
       total_points: 1,
       status_id: 4,
       example_link: null,
-      template_link: null
+      template_link: null,
     });
   });
 
@@ -50,7 +61,7 @@ describe('assignments routes', () => {
       total_points: 25,
       status_id: 4,
       template_link: null,
-      example_link: null
+      example_link: null,
     });
 
     expect(res.status).toEqual(403);
@@ -72,7 +83,7 @@ describe('assignments routes', () => {
       syllabus_id: 4,
       due_date: '2022-06-17 09:00:00',
       total_points: 25,
-      status_id: 4
+      status_id: 4,
     });
 
     expect(res.status).toEqual(200);
@@ -85,7 +96,7 @@ describe('assignments routes', () => {
       total_points: 25,
       status_id: 4,
       template_link: null,
-      example_link: null
+      example_link: null,
     });
   });
 
@@ -105,7 +116,7 @@ describe('assignments routes', () => {
       total_points: 1,
       description: 'I changed my mind this should be something different',
       template_link: null,
-      example_link: null
+      example_link: null,
     });
   });
 
@@ -127,7 +138,7 @@ describe('assignments routes', () => {
       total_points: 1,
       status_id: 4,
       example_link: null,
-      template_link: null
+      template_link: null,
     });
   });
 
