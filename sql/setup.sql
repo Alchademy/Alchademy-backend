@@ -149,7 +149,7 @@ INSERT INTO roles (name, description) VALUES
 ('Teacher', 'Leader of the cohort'),
 ('Admin', 'Full CRUD access across the application');
 
-INSERT INTO status (name) VALUES ('Pending'), ('Active'), ('Archived'), ('Completed');
+INSERT INTO status (name) VALUES ('Pending'), ('Submitted'), ('Archived'), ('Completed');
 
 INSERT INTO cohorts (month, year, title) VALUES
 ('February', 2022, 'february-2022'),
@@ -342,10 +342,10 @@ INSERT INTO assignments (title, description, syllabus_id, due_date, total_points
 ('Team Assessment Project', '{"blocks":[{"key":"d3nhv","text":"Learning happens faster when you take some time to reflect on your progress. Consider this a weekly journal entry to that effect.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5tgod","text":"Below are some questions you may want to consider. Feel free to answer any, all, or none of them, as suits your reflection:","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8bvdq","text":"Think back to this time last week: what specifically can you do today that you couldnt do then?","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"342h5","text":"What worked this week? What didnt? Any major victories or breakthrough moments?","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"29ue","text":"Were there times when you felt like you were just spinning your wheels this week? What got you unstuck?","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9dr26","text":"What specific tasks felt most challenging? Try to be specific, maybe even copying and pasting learning objectives from READMEs.","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"engao","text":"What could you do to address areas of weakness? How can we help?","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}', 5, '2022-06-03 18:00:00', 150, 4, '', '');
 
 INSERT INTO submissions (text, status_id, assignment_id, user_id, grade) VALUES 
-('Beau Submission for Soccer Score Keeper', 4, 1, 10, 10),
-('Beau Submission for Poll Maker', 4, 2, 10, 10),
-('Beau Submission for Mushroom Festival', 4, 3, 10, 6),
-('Beau Submission for Goblin Fighter', 1, 4, 10, null);
+('Beau Submission for Soccer Score Keeper', 4, 1, 10, 1),
+('Beau Submission for Poll Maker', 4, 2, 10, 1),
+('Beau Submission for Mushroom Festival', 4, 3, 10, 1),
+('Beau Submission for Goblin Fighter', 2, 4, 10, null);
 
 INSERT INTO tickets (text, status_id, assignment_id, ta_id, user_id) VALUES
 ('please help me', 1, 3, 4, 9),
