@@ -16,7 +16,7 @@ describe('assignments routes', () => {
     const res = await agent.get('/assignments/syllabus/1');
 
     expect(res.status).toEqual(200);
-    expect(res.body.length).toEqual(0);
+    expect(res.body.length).toEqual(21);
   });
 
   it('GET /assignments/:id should display a singular assignment', async () => {
@@ -27,13 +27,15 @@ describe('assignments routes', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       id: expect.any(String),
-      title: 'Half Baked: Soccer Score Keeper',
-      description: '',
-      syllabus_id: 2,
-      due_date: expect.any(String),
+      title: 'Complete Typing Test',
+      description: expect.any(String),
+      syllabus_id: 1,
+      due_date: null,
       status: expect.any(String),
-      total_points: 10,
+      total_points: 1,
       status_id: 4,
+      example_link: null,
+      template_link: null
     });
   });
 
@@ -47,6 +49,8 @@ describe('assignments routes', () => {
       due_date: '2022-06-17 09:00:00',
       total_points: 25,
       status_id: 4,
+      template_link: null,
+      example_link: null
     });
 
     expect(res.status).toEqual(403);
@@ -68,7 +72,7 @@ describe('assignments routes', () => {
       syllabus_id: 4,
       due_date: '2022-06-17 09:00:00',
       total_points: 25,
-      status_id: 4,
+      status_id: 4
     });
 
     expect(res.status).toEqual(200);
@@ -80,6 +84,8 @@ describe('assignments routes', () => {
       due_date: expect.any(String),
       total_points: 25,
       status_id: 4,
+      template_link: null,
+      example_link: null
     });
   });
 
@@ -92,12 +98,14 @@ describe('assignments routes', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       id: expect.any(String),
-      due_date: expect.any(String),
+      due_date: null,
       status_id: 4,
-      syllabus_id: 2,
-      title: 'Half Baked: Soccer Score Keeper',
-      total_points: 10,
+      syllabus_id: 1,
+      title: 'Complete Typing Test',
+      total_points: 1,
       description: 'I changed my mind this should be something different',
+      template_link: null,
+      example_link: null
     });
   });
 
@@ -111,13 +119,15 @@ describe('assignments routes', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       id: expect.any(String),
-      description: '',
-      due_date: expect.any(String),
+      title: 'Complete Typing Test',
+      description: expect.any(String),
+      syllabus_id: 1,
+      due_date: null,
       status: expect.any(String),
+      total_points: 1,
       status_id: 4,
-      syllabus_id: 2,
-      title: 'Half Baked: Soccer Score Keeper',
-      total_points: 10,
+      example_link: null,
+      template_link: null
     });
   });
 
