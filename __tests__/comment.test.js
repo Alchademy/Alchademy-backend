@@ -10,7 +10,7 @@ describe('comment routes', () => {
     return setup(pool);
   });
 
-  it('GET /comments gets single comment', async () => {
+  it('GET /comments/:id returns a single comment', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.get('/comments/2');
@@ -21,7 +21,7 @@ describe('comment routes', () => {
     );
   });
 
-  it('GET /comments for a specific record and type', async () => {
+  it('GET /comments/type/:id returns all comments for a specific record and type', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.get('/comments/400/2');

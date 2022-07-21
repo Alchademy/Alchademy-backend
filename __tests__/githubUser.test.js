@@ -18,7 +18,7 @@ describe('github routes', () => {
     );
   });
 
-  it('GET /github/callback route should login in user. GET /github/dashboard should get user', async () => {
+  it('GET /github/callback route should login in user & GET /github/dashboard should get user', async () => {
     const agent = await request.agent(app);
     const cookie = await agent.get('/github/callback?code=55');
     expect(cookie.cookie);
@@ -38,7 +38,7 @@ describe('github routes', () => {
     });
   });
 
-  it('should remove user session on calling delete', async () => {
+  it('DELETE /github/sessions should remove user session on calling delete', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.get('/github/dashboard');
@@ -51,7 +51,7 @@ describe('github routes', () => {
     });
   });
 
-  it('PUT should update a user', async () => {
+  it('PUT /github/dashboard should update a user', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.get('/github/dashboard');
