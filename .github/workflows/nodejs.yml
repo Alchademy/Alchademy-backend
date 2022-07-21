@@ -26,4 +26,3 @@ jobs:
           REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
           ALCHADEMY_ACCESS_TOKEN: ${{ secrets.ALCHADEMY_ACCESS_TOKEN }}
           ALCHADEMY_GITHUB_ID: ${{ secrets.ALCHADEMY_GITHUB_ID }}
-          SECURE_COOKIES: ${{ secrets.SECURE_COOKIES }}
