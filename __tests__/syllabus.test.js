@@ -56,7 +56,6 @@ describe('syllabus routes', () => {
     await agent.delete('/github/sessions');
     await agent.get('/github/callback?code=55');
     const resp = await agent.delete('/syllabus/5');
-    console.log(resp);
     expect(resp.status).toEqual(200);
     expect(resp.body.id).toEqual('5');
     const res = await agent.get('/syllabus');
