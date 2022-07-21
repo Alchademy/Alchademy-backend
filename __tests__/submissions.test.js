@@ -64,6 +64,7 @@ describe('backend submission routes', () => {
       assignment_id: 4,
       user_id: Number(user.body.id),
       grade: 20,
+      repo_link: null
     });
   });
 
@@ -82,6 +83,7 @@ describe('backend submission routes', () => {
       assignment_id: 1,
       user_id: 10,
       grade: 7,
+      repo_link: null
     });
   });
 
