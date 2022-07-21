@@ -79,7 +79,7 @@ describe('syllabus routes', () => {
     expect(res.body.length).toEqual(4);
   });
 
-  it('POST /syllabus should update a particular syllabus', async () => {
+  it('PUT /syllabus/:id should update a particular syllabus', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     await agent.put('/github/1').send({ role: 3 });

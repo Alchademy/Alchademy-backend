@@ -56,7 +56,7 @@ describe('comment routes', () => {
     expect(resp.body.length).toEqual(2);
   });
 
-  it('DELETE /comments should delete a particular comment', async () => {
+  it('DELETE /comments/:id should delete a particular comment', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.post('/comments').send({

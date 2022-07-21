@@ -110,7 +110,7 @@ describe('backend submission routes', () => {
     });
   });
 
-  it('PUT /submissions/id should update a submission', async () => {
+  it('PUT /submissions/:id should update a submission', async () => {
     const agent = await request.agent(app);
     await agent.get('/github/callback?code=55');
     const res = await agent.put('/submissions/1').send({
